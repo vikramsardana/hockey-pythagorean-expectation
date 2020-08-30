@@ -1,2 +1,23 @@
 # hockey-pythagorean-expectation
-Analyzing expected wins for NHL teams and goalie for 2019-2020
+
+In sports, the Pythagorean Expectation theorem is used to determine how many games a team “should” have won. It originated in baseball, looking at the number of gamesa team would have been expected to win based on their runs scored and runs given up. When compared to the number of games the team actually won, it can give us a sense of how “lucky” or “unlucky” a team is. It can also give us an idea of a team’s actual underlying talent level - for example, if a team has significantly more expected wins than actual wins, a GM might not need to make as many significant changes as their actual record might indicate.
+
+In hockey the Pythagorean Expectation theorem works much the same, obviously with goals instead of runs. The formula for calculating the expected percent of wins is 
+
+Goals For Pythagorean Exponent / (Goals For ^ (Pythagorean Exponent) + Goals Against ^ (Pythagorean Exponent))
+
+where the Pythagorean Exponent equals the league average of (Goals/Game) ^ 0.452. The 0.452 comes from [this](http://www.hockeyanalytics.com/Research_files/Win_Probabilities.pdf) paper that tried to find the ideal exponent. In the 2019-2020 season the average goals/game according to Hockey-Reference was 3.02. 
+
+Running the numbers for every team (the getTeamWinPercentages function) and looking at the data sorted by a team’s expected wins minus their actual wins (so a value of 1 means the team was expected to win one more than than they actually did and a value of -1 means the team won one more game than they were expected to win), we can see some interesting insights.
+
+The five luckiest teams (the biggest negative values) were Washington (which won 3.4 more games than expected), Calgary (2.4 games), Pittsburgh (2.1 games), Dallas (1.85 games), and St Louis (1.81 games). Interestingly, all of those teams made it to the Stanley Cup Qualifiers, where Washington lost in the first round to the lower-seeded Islanders, Pittsburgh lost in the qualifying round to the lower-seeded Canadiens, Dallas is still alive in the second round against the Avalanche, Calgary won their qualifier series but lost in the first round to Dallas, and St Louis lost in the first round to the Canucks. Perhaps with the break in play due to Covid-19 these team’s luck ran out.
+
+The five unluckiest teams (the biggest positive values) were Ottawa (which won 3.9 fewer games than expected), Arizona (3.08 games), Montreal (2.85 games), Chicago (2.17 games), and Detroit (1.6 games). Ottawa and Detroit both missed the qualifiers (Detroit actually had the fewest points in the league while Ottawa had the second fewest), while Arizona upset higher-seeded Nashville in the qualifying round before losing to Colorado, Montreal upset higher seeded Pittsburgh in the qualifying round before losing to Philadelphia, and Chicago upset higher seeded Edmonton in the qualifying round before losing to the Golden Knights. Perhaps the Covid-19 break in play had the opposite effect for these underperforming teams, and their bad luck ended.
+
+Another thing that I looked at was whether there was a difference when looking by goalie. Was there a significant difference between a team’s expected win percentage when playing with a particular goalie compared to their overall expected win percentage? Looking at these differences (the getDifferences function) we look at the goalieExpectedMinusTeamPercentage column, which takes the goalie’s expected win percentage and subtracts the team’s expected win percentage. Keep in mind that in a 70 game season, one game is equal to 1.4%. We would also at least theoretically expect that a starting goalie would have an expected win percentage above the team’s overall expected win percentage, and a backup goalie to have an expected win percentage below the team’s overall win percentage. It’s the extreme values, or when we see something different, that’s interesting to us.
+
+There were four goalies with an expected win rate of over ten percent greater than their team’s expected win rate. Those were Igor Shesterkin of the New York Rangers (a 17.4% difference), Calvin Petersen of the Los Angeles Kings (15.6%), Chris Driedger of the Florida Panthers (15.4%), and Ilya Samsonov of the Washington Capitals (10.0%). Interestingly, of these goalies, none of them were their team’s starter, suggesting a change is something a GM or coach should at least explore. 
+
+The input data for this project came from Hockey-Reference.com and can be found in the GoalieData.csv file. Various output files can be found which have the data sorted by different columns, the ones referenced here are the goalieTeamWinDifferenceOutput.csv file and the goalieVsTeamOutput.csv file.
+
+
